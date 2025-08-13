@@ -1,0 +1,61 @@
+<% layout("/layout/boilerplate") %>
+<body>
+  <div class="container my-5" style="max-width: 600px;">
+    <div class="card shadow-sm p-4">
+      <h2 class="mb-4 text-center">Add a New Listing</h2>
+      
+      <form action="/listings/add/newdata" method="POST">
+     
+        <div class="mb-3">
+          <label for="title" class="form-label">Title</label>
+          <input type="text" id="title" name="title" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="description" class="form-label">Description</label>
+          <textarea id="description" name="description" class="form-control" rows="4" required></textarea>
+        </div>
+
+       
+        <div class="mb-3">
+          <label for="price" class="form-label">Price (per night $)</label>
+          <input type="number" id="price" name="price" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="location" class="form-label">Location</label>
+          <input type="text" id="location" name="location" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="country" class="form-label">Country</label>
+          <input type="text" id="country" name="country" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="image" class="form-label">Image URL</label>
+          <input type="text" id="image" name="image">
+        </div>
+
+        <div class="d-flex justify-content-between mt-4">
+          <a href="/listings" class="btn btn-secondary">Cancel</a>
+          <button type="submit" class="btn btn-success">Add Listing</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <style>
+    body {
+      background-color: #f8f9fa;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    h2 {
+      font-weight: 600;
+    }
+    .card {
+      border-radius: 10px;
+    }
+  </style>
+</body>
+</html>

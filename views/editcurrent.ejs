@@ -1,0 +1,45 @@
+<% layout("/layout/boilerplate") %>
+<body>
+  <div class="container my-5" style="max-width: 600px;">
+    <div class="card shadow-sm p-4">
+      <h2 class="mb-4 text-center">Edit Listing</h2>
+      
+      <form action="/listings/edit/<%= listing._id %>?_method=PATCH" method="POST">
+       
+        <div class="mb-3">
+          <label for="title" class="form-label">Title</label>
+          <input type="text" id="title" name="title" class="form-control" value="<%= listing.title %>" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="description" class="form-label">Description</label>
+          <textarea id="description" name="description" class="form-control" rows="4" required><%= listing.description %></textarea>
+        </div>
+
+        <div class="mb-3">
+          <label for="price" class="form-label">Price ($)</label>
+          <input type="number" id="price" name="price" class="form-control" value="<%= listing.price %>" required>
+        </div>
+
+        <div class="d-flex justify-content-between mt-4">
+          <a href="/listings/<%= listing._id %>" class="btn btn-secondary">Cancel</a>
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <style>
+    body {
+      background-color: #f8f9fa;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    h2 {
+      font-weight: 600;
+    }
+    .card {
+      border-radius: 10px;
+    }
+  </style>
+</body>
+</html>

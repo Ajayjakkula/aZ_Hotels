@@ -1,0 +1,45 @@
+<% layout("/layout/boilerplate") %>
+<body>
+  <div class="container my-5">
+    <div class="card shadow-sm mx-auto" style="max-width: 600px;">
+      <img src="<%= totaldata.image || 'default-url' %>" class="card-img-top" alt="<%= totaldata.title %>" 
+           class="card-img-top" 
+           alt="<%= totaldata.title %>" 
+           style="height: 300px; object-fit: cover;">
+
+      <div class="card-body">
+        <h2 class="card-title"><%= totaldata.title %></h2>
+        <p class="text-muted mb-2"><i class="fa-solid fa-location-dot"></i> <%= totaldata.location %>, <%= totaldata.country %></p>
+        <p class="card-text"><%= totaldata.description %></p>
+        <h5 class="text-success">$<%= totaldata.price %> / night</h5>
+
+        <div class="d-flex justify-content-between mt-4">
+          <a href="/listings" class="btn btn-secondary">Go to Home</a>
+          <div>
+            <a href="/listings/edit/<%= totaldata._id %>" class="btn btn-primary me-2">Edit</a>
+            <form action="/listings/delete/<%= totaldata._id %>?_method=delete" method="post" class="d-inline">
+              <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    body {
+      background-color: #f8f9fa;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .card-title {
+      font-weight: 600;
+    }
+    .card-text {
+      line-height: 1.6;
+    }
+    .btn {
+      min-width: 90px;
+    }
+  </style>
+</body>
+</html>

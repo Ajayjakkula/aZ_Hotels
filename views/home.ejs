@@ -1,0 +1,21 @@
+<% layout("/layout/boilerplate") %>
+<body>
+  
+<% for(let data of totaldata){ %>
+  <div class="card" style="width: 18rem; margin:10px; display:inline-block;">
+    <img src="<%= data.image || 'default-url' %>" class="card-img-top" alt="<%= data.title %>" 
+
+
+         class="card-img-top" 
+         alt="<%= data.title %>"
+         style="height: 200px; width: 100%; object-fit: cover;">
+    <div class="card-body">
+      <p class="card-text"><%= data.title %></p>
+      <a href="/listings/<%= data._id %>" class="btn btn-primary">View</a>
+    </div>
+  </div>
+<% } %>
+
+
+</body>
+</html>
