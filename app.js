@@ -50,12 +50,13 @@ app.post("/listings/add/newdata", wrapAsync(async (req, res) => {
 
 app.get("/listings/:id", wrapAsync(async (req, res) => {
   let { id } = req.params;
-  let totaldata = await Listing.findById(id);
+  let totaldata = await Listing.findById(id).populate("review"); // <-- populate reviews
   if (!totaldata) {
     throw new ExpressError(404, "Listing not found");
   }
   res.render("Briefinfo", { totaldata });
 }));
+
 
 app.get("/listings/edit/:id", wrapAsync(async (req, res) => {
   let { id } = req.params;
@@ -90,13 +91,20 @@ app.delete("/listings/delete/:id", wrapAsync(async (req, res) => {
 }));
 
 app.post("/listings/reviews/:id", async (req, res) => {
-  let listing=await Listing.findById(req.params.id);
-  let newreview=new Review(req.body.review);
-  listing.review.push(newreview);
+  let listing = await Listing.findById(req.params.id);
+  let newreview = new Review(req.body.review);
   await newreview.save();
+  listing.review.push(newreview);
   await listing.save();
-   res.send("Added")
+  res.redirect(`/listings/${req.params.id}`);
 });
+
+app.delete("/listings/:cid/review/delete/:id",async(req,res)=>{
+let {id}=req.params;
+let {cid}=req.params;
+let rev=await Review.findByIdAndDelete(id);
+res.redirect(`/listings/${cid}`)
+})
 
 // Catch-all (404 handler)
 app.use((req, res, next) => {

@@ -51,8 +51,9 @@
 
 <% if(totaldata.review.length > 0) { %>
   <% for(rev of totaldata.review ) { %>
-    <h3>Comment: <%= rev.comment %></h3>
-    <h3>Rating: ⭐ <%= rev.rating %></h3>
+    <h5>Comment: <%= rev.comment %></h5>
+    <h5>Rating: ⭐ <%= rev.rating %></h5>
+    <form action="/listings/<%= totaldata._id %>/review/delete/<%= rev._id %>?_method=delete" method="post"><button type="submit" class="btn btn-dark">Delete Review</button></form>
   <% } %>
 <% } else { %>
   <p>No reviews yet</p>
