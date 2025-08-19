@@ -37,7 +37,7 @@
         <!-- Review Section -->
         <div class="mt-5">
           <h4 class="mb-3">💬 Leave a Review</h4>
-          <form action="/listings/reviews/<%= totaldata._id %>" method="post" novalidate class="needs-validation">
+          <form action="/listings/<%= totaldata._id %>/reviews" method="post" novalidate class="needs-validation">
             <div class="mb-3">
               <textarea name="review[comment]" class="form-control" rows="3" placeholder="Enter your comment"></textarea>
             </div>
@@ -53,7 +53,7 @@
   <% for(rev of totaldata.review ) { %>
     <h5>Comment: <%= rev.comment %></h5>
     <h5>Rating: ⭐ <%= rev.rating %></h5>
-    <form action="/listings/<%= totaldata._id %>/review/delete/<%= rev._id %>?_method=delete" method="post"><button type="submit" class="btn btn-dark">Delete Review</button></form>
+    <form action="/listings/<%= totaldata._id %>/reviews/delete/<%= rev._id %>?_method=delete" method="post"><button type="submit" class="btn btn-dark">Delete Review</button></form>
   <% } %>
 <% } else { %>
   <p>No reviews yet</p>

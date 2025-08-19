@@ -9,6 +9,9 @@ const ExpressError = require("./utils/ExpressError");
 const {listingSchema}=require("./shema.js")
 const Review=require("./models/review.js")
 
+const listroutes=require("./routes/listing.js")
+const revroutes=require("./routes/review.js")
+
 const app = express();
 
 // Middleware
@@ -26,85 +29,9 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 app.engine("ejs", ejsmate);
 
-// Routes
-app.get("/listings", wrapAsync(async (req, res) => {
-  let totaldata = await Listing.find({});
-  res.render("home", { totaldata });
-}));
+app.use("/listings",listroutes);
 
-app.get("/listings/add/new", (req, res) => {
-  res.render("addnewlisting.ejs");
-});
-
-app.post("/listings/add/newdata", wrapAsync(async (req, res) => {
-  // const result = listingSchema.validate(req.body);
-  await Listing.create(req.body);
-  res.redirect("/listings");
-
-  //suppose if you have not enterd valid description
-  //const newlisting = new Listing(req.body.listing)
-  //if(!newlisting.descrption){
-  //throw new ExpressError(404,"Send Valid Description")
-  //}
-}));
-
-app.get("/listings/:id", wrapAsync(async (req, res) => {
-  let { id } = req.params;
-  let totaldata = await Listing.findById(id).populate("review"); // <-- populate reviews
-  if (!totaldata) {
-    throw new ExpressError(404, "Listing not found");
-  }
-  res.render("Briefinfo", { totaldata });
-}));
-
-
-app.get("/listings/edit/:id", wrapAsync(async (req, res) => {
-  let { id } = req.params;
-  let listing = await Listing.findById(id);
-  if (!listing) {
-    throw new ExpressError(404, "Listing not found");
-  }
-  res.render("editcurrent", { listing });
-}));
-
-app.patch("/listings/edit/:id", wrapAsync(async (req, res) => {
-  let { id } = req.params;
-  let { title, description, price } = req.body;
-
-  let updatedListing = await Listing.findByIdAndUpdate(
-    id,
-    { title, description, price },
-    { new: true, runValidators: true }
-  );
-
-  if (!updatedListing) {
-    throw new ExpressError(404, "Listing not found");
-  }
-
-  res.redirect(`/listings/${id}`);
-}));
-
-app.delete("/listings/delete/:id", wrapAsync(async (req, res) => {
-  let { id } = req.params;
-  await Listing.findByIdAndDelete(id);
-  res.redirect("/listings");
-}));
-
-app.post("/listings/reviews/:id", async (req, res) => {
-  let listing = await Listing.findById(req.params.id);
-  let newreview = new Review(req.body.review);
-  await newreview.save();
-  listing.review.push(newreview);
-  await listing.save();
-  res.redirect(`/listings/${req.params.id}`);
-});
-
-app.delete("/listings/:cid/review/delete/:id",async(req,res)=>{
-let {id}=req.params;
-let {cid}=req.params;
-let rev=await Review.findByIdAndDelete(id);
-res.redirect(`/listings/${cid}`)
-})
+app.use("/listings/:id/reviews",revroutes);
 
 // Catch-all (404 handler)
 app.use((req, res, next) => {
