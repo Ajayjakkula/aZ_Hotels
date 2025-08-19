@@ -1,44 +1,83 @@
 <% layout("/layout/boilerplate") %>
 <body>
   <div class="container my-5">
-    <div class="card shadow-sm mx-auto" style="max-width: 600px;">
-      <img src="<%= totaldata.image || 'default-url' %>" class="card-img-top" alt="<%= totaldata.title %>" 
-           class="card-img-top" 
-           alt="<%= totaldata.title %>" 
-           style="height: 300px; object-fit: cover;">
+    <div class="card shadow-lg mx-auto border-0 rounded-4" style="max-width: 700px;">
+      
+      <!-- Image -->
+      <img src="<%= totaldata.image || 'default-url' %>" 
+           class="card-img-top rounded-top-4" 
+           alt="<%= totaldata.title %>"
+           style="height: 350px; object-fit: cover;">
 
-      <div class="card-body">
-        <h2 class="card-title"><%= totaldata.title %></h2>
-        <p class="text-muted mb-2"><i class="fa-solid fa-location-dot"></i> <%= totaldata.location %>, <%= totaldata.country %></p>
-        <p class="card-text"><%= totaldata.description %></p>
-        <h5 class="text-success">$<%= totaldata.price %> / night</h5>
+      <div class="card-body p-4">
+        <!-- Title & Location -->
+        <h2 class="card-title mb-3 text-primary fw-bold"><%= totaldata.title %></h2>
+        <p class="text-muted mb-3">
+          <i class="fa-solid fa-location-dot text-danger"></i> 
+          <%= totaldata.location %>, <%= totaldata.country %>
+        </p>
 
-        <div class="d-flex justify-content-between mt-4">
-          <a href="/listings" class="btn btn-secondary">Go to Home</a>
+        <!-- Description -->
+        <p class="card-text mb-3"><%= totaldata.description %></p>
+        
+        <!-- Price -->
+        <h5 class="text-success fw-semibold">$<%= totaldata.price %> / night</h5>
+
+        <!-- Action Buttons -->
+        <div class="d-flex justify-content-between align-items-center mt-4">
+          <a href="/listings" class="btn btn-outline-secondary">🏠 Home</a>
           <div>
-            <a href="/listings/edit/<%= totaldata._id %>" class="btn btn-primary me-2">Edit</a>
+            <a href="/listings/edit/<%= totaldata._id %>" class="btn btn-primary me-2">✏️ Edit</a>
             <form action="/listings/delete/<%= totaldata._id %>?_method=delete" method="post" class="d-inline">
-              <button type="submit" class="btn btn-danger">Delete</button>
+              <button type="submit" class="btn btn-danger">🗑️ Delete</button>
             </form>
           </div>
+        </div>
+
+        <!-- Review Section -->
+        <div class="mt-5">
+          <h4 class="mb-3">💬 Leave a Review</h4>
+          <form action="/listings/reviews/<%= totaldata._id %>" method="post" novalidate class="needs-validation">
+            <div class="mb-3">
+              <textarea name="review[comment]" class="form-control" rows="3" placeholder="Enter your comment"></textarea>
+            </div>
+            <div class="mb-3">
+              <input type="number" name="review[rating]" class="form-control w-50" placeholder="Enter Rating 1-5" min="1" max="5">
+            </div>
+            <button type="submit" class="btn btn-success">✅ Submit Review</button>
+          </form>
+          <hr>
+<h4>All Reviews</h4>
+
+<% if(totaldata.review.length > 0) { %>
+  <% for(rev of totaldata.review ) { %>
+    <h3>Comment: <%= rev.comment %></h3>
+    <h3>Rating: ⭐ <%= rev.rating %></h3>
+  <% } %>
+<% } else { %>
+  <p>No reviews yet</p>
+<% } %>
+
         </div>
       </div>
     </div>
   </div>
 
+  <!-- Custom Styling -->
   <style>
     body {
-      background-color: #f8f9fa;
+      background: linear-gradient(120deg, #f8f9fa, #e9ecef);
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
     .card-title {
-      font-weight: 600;
+      font-size: 1.8rem;
     }
-    .card-text {
-      line-height: 1.6;
+    textarea, input {
+      border-radius: 10px;
     }
     .btn {
-      min-width: 90px;
+      min-width: 100px;
+      border-radius: 8px;
     }
   </style>
 </body>
