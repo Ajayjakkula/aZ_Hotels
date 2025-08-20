@@ -18,6 +18,7 @@ router.get("/add/new", (req, res) => {
 router.post("/add/newdata", wrapAsync(async (req, res) => {
   // const result = listingSchema.validate(req.body);
   await Listing.create(req.body);
+   req.flash("success","New Listing Created ")
   res.redirect("/listings");
 
   //suppose if you have not enterd valid description
@@ -59,13 +60,14 @@ router.patch("/edit/:id", wrapAsync(async (req, res) => {
   if (!updatedListing) {
     throw new ExpressError(404, "Listing not found");
   }
-
+  req.flash("success","Updated Sucessfully :  ")
   res.redirect(`/listings/${id}`);
 }));
 
 router.delete("/delete/:id", wrapAsync(async (req, res) => {
   let { id } = req.params;
   await Listing.findByIdAndDelete(id);
+  req.flash("success"," Listing  Deleted ")
   res.redirect("/listings");
 }));
 

@@ -8,6 +8,8 @@ const wrapAsync = require("./utils/wrapAsync.js");
 const ExpressError = require("./utils/ExpressError");
 const {listingSchema}=require("./shema.js")
 const Review=require("./models/review.js")
+const session=require("express-session")
+const flash=require("connect-flash")
 
 const listroutes=require("./routes/listing.js")
 const revroutes=require("./routes/review.js")
@@ -19,6 +21,26 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(methodOverride("_method"));
 
+const sessionOptions={
+  secret:"mysecret",
+  resave:false,
+  saveUninitialized:true,
+  cookie:{
+    expires :Date.now() +7*24*60*60*1000,
+    maxAge:7*24*60*60*1000,
+    httpOnly:true
+  }
+}
+
+app.use(session(sessionOptions));
+app.use(flash())
+
+//Middleware for flsh
+app.use((req,res,next)=>{
+  res.locals.success=req.flash("success");
+  next();
+})
+
 // Database connection
 mongoose.connect("mongodb://127.0.0.1:27017/Hotel")
   .then(() => console.log("MongoDB connected"))
@@ -28,6 +50,9 @@ mongoose.connect("mongodb://127.0.0.1:27017/Hotel")
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 app.engine("ejs", ejsmate);
+
+
+
 
 app.use("/listings",listroutes);
 
