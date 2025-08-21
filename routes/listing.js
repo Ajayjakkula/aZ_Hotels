@@ -4,6 +4,7 @@ const wrapAsync = require("../utils/wrapAsync");
 const mongoose = require("mongoose");
 const Listing = require("../models/listing");
 const ExpressError = require("../utils/ExpressError");
+const {isLoggedIn}=require("../middelware")
 
 
 router.get("/", wrapAsync(async (req, res) => {
@@ -11,7 +12,7 @@ router.get("/", wrapAsync(async (req, res) => {
   res.render("home", { totaldata });
 }));
 
-router.get("/add/new", (req, res) => {
+router.get("/add/new",isLoggedIn, (req, res) => {
   res.render("addnewlisting.ejs");
 });
 
@@ -38,7 +39,8 @@ router.get("/:id", wrapAsync(async (req, res) => {
 }));
 
 
-router.get("/edit/:id", wrapAsync(async (req, res) => {
+router.get("/edit/:id", isLoggedIn,wrapAsync(async (req, res) => {
+
   let { id } = req.params;
   let listing = await Listing.findById(id);
   if (!listing) {
@@ -47,7 +49,8 @@ router.get("/edit/:id", wrapAsync(async (req, res) => {
   res.render("editcurrent", { listing });
 }));
 
-router.patch("/edit/:id", wrapAsync(async (req, res) => {
+router.patch("/edit/:id", isLoggedIn,wrapAsync(async (req, res) => {
+
   let { id } = req.params;
   let { title, description, price } = req.body;
 
@@ -64,7 +67,7 @@ router.patch("/edit/:id", wrapAsync(async (req, res) => {
   res.redirect(`/listings/${id}`);
 }));
 
-router.delete("/delete/:id", wrapAsync(async (req, res) => {
+router.delete("/delete/:id",isLoggedIn, wrapAsync(async (req, res) => {
   let { id } = req.params;
   await Listing.findByIdAndDelete(id);
   req.flash("success"," Listing  Deleted ")

@@ -1,6 +1,7 @@
 const mongoose=require("mongoose");
 const { type } = require("os");
 const Review=require("./review")
+const User=require("./user")
 
 const listingSchema=new mongoose.Schema(
     {
@@ -32,7 +33,11 @@ const listingSchema=new mongoose.Schema(
         review:[{
             type:mongoose.Schema.Types.ObjectId,
             ref:"Review"
-        }]
+        }],
+        owner:{
+          type:mongoose.Schema.Types.ObjectId,
+          ref:"User"
+        }
     }
 );
 
@@ -46,4 +51,7 @@ listingSchema.post("findOneAndDelete", async function (listing) {
 const listingmodel=mongoose.model("listingmodel",listingSchema);
 
 module.exports=listingmodel;
+
+
+
 

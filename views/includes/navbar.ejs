@@ -1,15 +1,30 @@
-<nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
+<nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top px-4">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#"><i class="fa-solid fa-compass"></i></a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <a class="navbar-brand fw-bold text-danger" href="#">
+      <i class="fa-solid fa-compass"></i>
+    </a>
+
+    <div class="collapse navbar-collapse justify-content-center" id="navbarNavAltMarkup">
       <div class="navbar-nav">
-        <a class="nav-link active" aria-current="page" href="/listings">Home</a>
-        <a class="nav-link" href="/listings">All Listings</a>
-        <a class="nav-link" href="/listings/add/new">Add New Listing</a>
+        <a class="nav-link active fw-semibold px-3" aria-current="page" href="/listings">Home</a>
+        <a class="nav-link fw-semibold px-3" href="/listings">All Listings</a>
+        <a class="nav-link fw-semibold px-3" href="/listings/add/new">Add New Listing</a>
       </div>
+    </div>
+    <div class="dropdown">
+      <button class="btn border rounded-pill px-3 py-2 d-flex align-items-center gap-2" 
+              type="button" id="menuDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <ul class="dropdown-menu dropdown-menu-end shadow p-2" aria-labelledby="menuDropdown">
+        <% if(!currentUser){ %>
+        <li><a class="dropdown-item" href="/login">Login</a></li>
+        <li><a class="dropdown-item" href="/signup">Sign Up</a></li>
+        <% } %>
+        <% if(currentUser){ %>
+        <li><a class="dropdown-item text-danger" href="/logout">Logout</a></li>
+        <% } %>
+      </ul>
     </div>
   </div>
 </nav>

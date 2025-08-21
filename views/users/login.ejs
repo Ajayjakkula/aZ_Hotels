@@ -9,8 +9,7 @@
     <div class="card shadow-sm p-4">
       <h2 class="mb-4 text-center">Login</h2>
       
-      <form action="/login" method="POST" >
-     
+      <form action="/login" method="POST">
         <div class="mb-3">
           <label for="username" class="form-label">Username</label>
           <input type="text" id="username" name="username" class="form-control" required>
@@ -27,7 +26,13 @@
 
         <div class="d-flex justify-content-between mt-4">
           <a href="/" class="btn btn-secondary">Cancel</a>
-          <button type="submit" class="btn btn-success">Register</button>
+          <button type="submit" class="btn btn-success">Login</button>
+        </div>
+
+        <!-- 🔹 Signup Button -->
+        <div class="text-center mt-3">
+          <p>Don't have an account?</p>
+          <a href="/signup" class="btn btn-primary">Sign Up</a>
         </div>
       </form>
     </div>

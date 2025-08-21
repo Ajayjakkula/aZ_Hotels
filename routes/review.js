@@ -4,9 +4,11 @@ const Listing = require("../models/listing");
 const Review=require("../models/review.js")
 const mongoose = require("mongoose");
 const ExpressError = require("../utils/ExpressError");
+const {isLoggedIn}=require("../middelware.js")
 
 
-router.post("/", async (req, res) => {
+router.post("/", isLoggedIn,async (req, res) => {
+
   let listing = await Listing.findById(req.params.id);
   let newreview = new Review(req.body.review);
   await newreview.save();
@@ -15,7 +17,11 @@ router.post("/", async (req, res) => {
   res.redirect(`/listings/${req.params.id}`);
 });
 
-router.delete("/delete/:idd",async(req,res)=>{
+router.delete("/delete/:idd",isLoggedIn,async(req,res)=>{
+  if(!req.isAuthenticated()){
+    req.flash("error","You Must Login To access this");
+    return res.redirect("/login")
+  }
 let {idd}=req.params;
 let {id}=req.params;
 let rev=await Review.findByIdAndDelete(idd);
