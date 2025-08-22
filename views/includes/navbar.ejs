@@ -1,30 +1,297 @@
-<nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top px-4">
+<style>
+  /* Enhanced navbar styling with improved mobile responsiveness */
+  .navbar {
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.95) !important;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+    min-height: 70px;
+  }
+
+  /* Improved brand styling with better mobile scaling */
+  .navbar-brand {
+    background: linear-gradient(135deg, #dc3545, #b02a37);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    transition: all 0.3s ease;
+    font-size: 1.5rem;
+  }
+  
+  .navbar-brand:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.1);
+  }
+
+  /* Enhanced nav links with better hover states */
+  .navbar .nav-link {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    color: #374151;
+    font-weight: 600;
+    position: relative;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  
+  .navbar .nav-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(220, 53, 69, 0.1), transparent);
+    transition: left 0.5s;
+  }
+  
+  .navbar .nav-link:hover::before {
+    left: 100%;
+  }
+  
+  .navbar .nav-link:hover,
+  .navbar .nav-link.active,
+  .hover-link:hover {
+    background: linear-gradient(135deg, #fef2f2, #fee2e2);
+    color: #dc2626 !important;
+    border-radius: 50px;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(220, 53, 69, 0.15);
+  }
+
+  /* Modern dropdown styling with glassmorphism */
+  .dropdown-menu {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    min-width: 200px;
+  }
+  
+  .dropdown-menu .dropdown-item {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-weight: 500;
+    border-radius: 8px;
+    margin: 2px 0;
+  }
+  
+  .dropdown-menu .dropdown-item:hover {
+    background: linear-gradient(135deg, #fef2f2, #fee2e2);
+    color: #dc2626;
+    transform: translateX(4px);
+    box-shadow: 0 2px 8px rgba(220, 53, 69, 0.1);
+  }
+
+  /* Enhanced account button with better mobile touch targets */
+  #menuDropdown {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: linear-gradient(135deg, #ffffff, #f8fafc);
+    border: 2px solid #e5e7eb;
+    position: relative;
+    overflow: hidden;
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  #menuDropdown::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(220, 53, 69, 0.05), transparent);
+    transition: left 0.6s;
+  }
+  
+  #menuDropdown:hover::before {
+    left: 100%;
+  }
+  
+  #menuDropdown:hover {
+    background: linear-gradient(135deg, #fef2f2, #ffffff);
+    border-color: #dc3545;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(220, 53, 69, 0.15);
+  }
+
+  /* Significantly improved mobile responsiveness */
+  @media (max-width: 991.98px) {
+    .navbar {
+      padding: 0.75rem 1rem;
+    }
+    
+    .navbar-brand {
+      font-size: 1.25rem;
+    }
+    
+    .navbar-brand span {
+      font-size: 1.25rem;
+    }
+    
+    .navbar-collapse {
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(20px);
+      border-radius: 16px;
+      margin-top: 1rem;
+      padding: 1.5rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      border: 1px solid rgba(220, 53, 69, 0.1);
+    }
+    
+    .navbar .nav-link {
+      margin: 0.5rem 0;
+      padding: 0.75rem 1rem !important;
+      text-align: center;
+      border-radius: 12px;
+    }
+    
+    .navbar-nav {
+      gap: 0.5rem !important;
+    }
+    
+    #menuDropdown {
+      padding: 0.5rem 0.75rem;
+    }
+    
+    .dropdown-menu {
+      margin-top: 0.5rem !important;
+      width: 100%;
+      min-width: auto;
+    }
+  }
+
+  /* Extra small devices optimization */
+  @media (max-width: 575.98px) {
+    .navbar {
+      padding: 0.5rem 0.75rem;
+    }
+    
+    .navbar-brand {
+      font-size: 1.1rem;
+    }
+    
+    .navbar-brand .fa-compass {
+      font-size: 1.2rem !important;
+    }
+    
+    .navbar-brand span {
+      font-size: 1.1rem;
+    }
+    
+    .container-fluid {
+      padding: 0;
+    }
+    
+    .navbar-collapse {
+      margin-top: 0.75rem;
+      padding: 1rem;
+    }
+    
+    .nav-link {
+      font-size: 0.95rem;
+    }
+    
+    #menuDropdown span {
+      display: none !important;
+    }
+    
+    #menuDropdown {
+      padding: 0.5rem;
+      min-width: 40px;
+    }
+  }
+
+  /* Better hamburger menu styling */
+  .navbar-toggler {
+    border: none !important;
+    padding: 0.5rem;
+    border-radius: 8px;
+    background: rgba(220, 53, 69, 0.1);
+    transition: all 0.3s ease;
+  }
+  
+  .navbar-toggler:hover {
+    background: rgba(220, 53, 69, 0.2);
+    transform: scale(1.05);
+  }
+  
+  .navbar-toggler:focus {
+    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+  }
+
+  /* Smooth scroll behavior for better UX */
+  .navbar.scrolled {
+    background: rgba(255, 255, 255, 0.98) !important;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  }
+
+  /* Better touch targets and accessibility */
+  @media (hover: none) and (pointer: coarse) {
+    .navbar .nav-link,
+    #menuDropdown,
+    .dropdown-item {
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .navbar .nav-link:hover,
+    .hover-link:hover {
+      transform: none;
+    }
+  }
+</style>
+
+<nav class="navbar navbar-expand-lg bg-white sticky-top">
   <div class="container-fluid">
-    <a class="navbar-brand fw-bold text-danger" href="#">
-      <i class="fa-solid fa-compass"></i>
+    <!-- Enhanced brand with better mobile spacing -->
+    <a class="navbar-brand fw-bold d-flex align-items-center" href="/" style="gap: 0.75rem;">
+      <i class="fa-solid fa-compass fa-lg"></i>
+      <span>aZ Hotels</span>
     </a>
 
+    <!-- Improved mobile toggle button with better accessibility -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <i class="fa-solid fa-bars text-danger"></i>
+    </button>
+
+    <!-- Enhanced nav links with better mobile layout -->
     <div class="collapse navbar-collapse justify-content-center" id="navbarNavAltMarkup">
-      <div class="navbar-nav">
-        <a class="nav-link active fw-semibold px-3" aria-current="page" href="/listings">Home</a>
-        <a class="nav-link fw-semibold px-3" href="/listings">All Listings</a>
-        <a class="nav-link fw-semibold px-3" href="/listings/add/new">Add New Listing</a>
+      <div class="navbar-nav" style="gap: 1rem;">
+        <a class="nav-link fw-semibold px-4 py-2 rounded-pill hover-link" href="/listings">Home</a>
+        <a class="nav-link fw-semibold px-4 py-2 rounded-pill hover-link" href="/listings/add/new">Add New Listing</a>
       </div>
     </div>
+
+    <!-- Enhanced user dropdown with better mobile touch targets -->
     <div class="dropdown">
-      <button class="btn border rounded-pill px-3 py-2 d-flex align-items-center gap-2" 
-              type="button" id="menuDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-        <i class="fa-solid fa-bars"></i>
+      <button class="btn rounded-pill d-flex align-items-center" 
+              type="button" id="menuDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="gap: 0.75rem; padding: 0.5rem 1rem;">
+        <i class="fa-solid fa-user-circle fa-lg text-danger"></i>
+        <span class="d-none d-sm-inline fw-semibold">Account</span>
       </button>
-      <ul class="dropdown-menu dropdown-menu-end shadow p-2" aria-labelledby="menuDropdown">
+      <ul class="dropdown-menu dropdown-menu-end rounded-4 p-2" aria-labelledby="menuDropdown">
         <% if(!currentUser){ %>
-        <li><a class="dropdown-item" href="/login">Login</a></li>
-        <li><a class="dropdown-item" href="/signup">Sign Up</a></li>
+        <li><a class="dropdown-item rounded-3 py-2 px-3" href="/login"><i class="fa-solid fa-right-to-bracket me-2"></i>Login</a></li>
+        <li><a class="dropdown-item rounded-3 py-2 px-3" href="/signup"><i class="fa-solid fa-user-plus me-2"></i>Sign Up</a></li>
         <% } %>
         <% if(currentUser){ %>
-        <li><a class="dropdown-item text-danger" href="/logout">Logout</a></li>
+        <li><a class="dropdown-item text-danger fw-semibold rounded-3 py-2 px-3" href="/logout"><i class="fa-solid fa-right-from-bracket me-2"></i>Logout</a></li>
         <% } %>
       </ul>
     </div>
   </div>
 </nav>
+
+<!-- Added JavaScript for scroll effects -->
+<script>
+window.addEventListener('scroll', function() {
+  const navbar = document.querySelector('.navbar');
+  if (window.scrollY > 50) {
+    navbar.classList.add('scrolled');
+  } else {
+    navbar.classList.remove('scrolled');
+  }
+});
+</script>

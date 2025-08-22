@@ -1,55 +1,312 @@
 <!-- Footer -->
-<footer class="footer mt-auto py-4 bg-dark text-white">
-  <div class="container">
-    <div class="row">
+<footer class="footer mt-auto py-5 position-relative overflow-hidden">
+  <!-- Background gradient overlay -->
+  <div class="footer-bg"></div>
+  
+  <div class="container position-relative">
+    <div class="row g-4">
       <!-- About -->
-      <div class="col-md-4 mb-3">
-        <h5>About aZ Hotels</h5>
-        <p>Your go-to platform for finding amazing listings and travel destinations around the world. Explore, book, and enjoy your perfect trip!</p>
+      <div class="col-lg-4 col-md-6 mb-4">
+        <div class="footer-section">
+          <h5 class="footer-title mb-3">
+            <i class="fas fa-hotel me-2 text-primary"></i>
+            About aZ Hotels
+          </h5>
+          <p class="footer-text">Your go-to platform for finding amazing listings and travel destinations around the world. Explore, book, and enjoy your perfect trip!</p>
+        </div>
       </div>
 
-      
-      <div class="col-md-4 mb-3">
-        <h5>Quick Links</h5>
-        <ul class="list-unstyled">
-          <li><a href="/listings" class="text-white text-decoration-none">Home</a></li>
-          <li><a href="/listings" class="text-white text-decoration-none">All Listings</a></li>
-          <li><a href="/listings/add/new" class="text-white text-decoration-none">Add New Listing</a></li>
-        </ul>
+      <!-- Quick Links -->
+      <div class="col-lg-4 col-md-6 mb-4">
+        <div class="footer-section">
+          <h5 class="footer-title mb-3">
+            <i class="fas fa-link me-2 text-primary"></i>
+            Quick Links
+          </h5>
+          <ul class="list-unstyled footer-links">
+            <li><a href="/listings" class="footer-link">
+              <i class="fas fa-home me-2"></i>Home
+            </a></li>
+            <li><a href="/listings" class="footer-link">
+              <i class="fas fa-list me-2"></i>All Listings
+            </a></li>
+            <li><a href="/listings/add/new" class="footer-link">
+              <i class="fas fa-plus me-2"></i>Add New Listing
+            </a></li>
+          </ul>
+        </div>
       </div>
 
-     
-      <div class="col-md-4 mb-3">
-        <h5>Contact Us</h5>
-        <p><i class="fa-solid fa-envelope me-2"></i>aZ Hotels.com</p>
-        <p><i class="fa-solid fa-phone me-2"></i>+91 12345 67890</p>
-        <div>
-          <a href="#" class="text-white me-3"><i class="fab fa-facebook-f"></i></a>
-          <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
-          <a href="#" class="text-white me-3"><i class="fab fa-instagram"></i></a>
+      <!-- Contact Us -->
+      <div class="col-lg-4 col-md-12 mb-4">
+        <div class="footer-section">
+          <h5 class="footer-title mb-3">
+            <i class="fas fa-envelope me-2 text-primary"></i>
+            Contact Us
+          </h5>
+          <div class="contact-info mb-3">
+            <p class="footer-contact">
+              <i class="fas fa-envelope me-3 text-primary"></i>
+              <span>aZ Hotels.com</span>
+            </p>
+            <p class="footer-contact">
+              <i class="fas fa-phone me-3 text-primary"></i>
+              <span>+91 12345 67890</span>
+            </p>
+          </div>
+          <div class="social-links">
+            <a href="#" class="social-link" aria-label="Facebook">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="#" class="social-link" aria-label="Twitter">
+              <i class="fab fa-twitter"></i>
+            </a>
+            <a href="#" class="social-link" aria-label="Instagram">
+              <i class="fab fa-instagram"></i>
+            </a>
+            <a href="#" class="social-link" aria-label="LinkedIn">
+              <i class="fab fa-linkedin-in"></i>
+            </a>
+          </div>
         </div>
       </div>
     </div>
 
-    <hr class="bg-white">
+    <!-- Divider -->
+    <div class="footer-divider my-4"></div>
 
+    <!-- Copyright -->
     <div class="text-center">
-      &copy; 2025 TravelMate. All Rights Reserved.
+      <p class="copyright-text mb-0">
+        &copy; 2025 <span class="brand-name">aZ Hotels</span>. All Rights Reserved.
+        <span class="separator">|</span>
+        Made with <i class="fas fa-heart text-danger"></i> for travelers
+      </p>
     </div>
   </div>
+
+  <!-- Decorative elements -->
+  <div class="footer-decoration"></div>
 </footer>
 
 <style>
-.footer a:hover {
-  color: #ffd700; 
-  text-decoration: none;
+/* Footer Background */
+.footer {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  color: #ffffff;
+  position: relative;
 }
 
-.footer h5 {
+.footer-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.15) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+/* Footer Sections */
+.footer-section {
+  height: 100%;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.footer-section:hover {
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Typography */
+.footer-title {
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: #ffffff;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.footer-text {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 0;
+}
+
+/* Links */
+.footer-links {
+  margin: 0;
+  padding: 0;
+}
+
+.footer-links li {
+  margin-bottom: 0.75rem;
+}
+
+.footer-link {
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  transition: all 0.3s ease;
+  padding: 0.5rem 0;
+  border-radius: 8px;
+}
+
+.footer-link:hover {
+  color: #ffd700;
+  transform: translateX(10px);
+  background: rgba(255, 215, 0, 0.1);
+  padding-left: 1rem;
+}
+
+.footer-link i {
+  width: 20px;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+.footer-link:hover i {
+  opacity: 1;
+}
+
+/* Contact Info */
+.contact-info {
+  margin-bottom: 1.5rem;
+}
+
+.footer-contact {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.95rem;
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  transition: color 0.3s ease;
+}
+
+.footer-contact:hover {
+  color: #ffd700;
+}
+
+.footer-contact i {
+  width: 25px;
+  opacity: 0.8;
+}
+
+/* Social Links */
+.social-links {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+  height: 45px;
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  border-radius: 50%;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 1.1rem;
+}
+
+.social-link:hover {
+  background: linear-gradient(135deg, #ffd700, #ffed4e);
+  color: #1a1a2e;
+  transform: translateY(-3px) scale(1.1);
+  box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
+  border-color: #ffd700;
+}
+
+/* Divider */
+.footer-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  border: none;
+}
+
+/* Copyright */
+.copyright-text {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 400;
+}
+
+.brand-name {
+  color: #ffd700;
   font-weight: 600;
 }
 
-.footer p, .footer li {
-  font-size: 0.9rem;
+.separator {
+  margin: 0 0.75rem;
+  opacity: 0.5;
+}
+
+/* Decorative Elements */
+.footer-decoration {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #ffd700, #ffed4e, #ffd700);
+}
+
+/* Primary Color */
+.text-primary {
+  color: #ffd700 !important;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .footer {
+    padding: 2rem 0;
+  }
+  
+  .footer-section {
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .social-links {
+    justify-content: center;
+  }
+  
+  .footer-link:hover {
+    transform: none;
+    padding-left: 0.5rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .footer-title {
+    font-size: 1.1rem;
+  }
+  
+  .social-link {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+  
+  .copyright-text {
+    font-size: 0.8rem;
+  }
 }
 </style>

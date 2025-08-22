@@ -39,7 +39,7 @@ module.exports.isAuthor = async (req, res, next) => {
   let review = await Review.findById(idd);
 
   if (!review.author.equals(res.locals.currentUser._id)) {
-    req.flash("error", "You are not allowed to do this");
+    req.flash("error", "You are not allo wed to do this");
     return res.redirect(`/listings/${id}`);
   }
 
