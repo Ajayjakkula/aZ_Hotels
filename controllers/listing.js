@@ -9,7 +9,7 @@ module.exports.rendernewlisting=async (req, res) => {
   res.render("addnewlisting.ejs");
 };
 
-module.exports.newlistingroute=async (req, res) => {
+module.exports.addroute=async (req, res) => {
   const newListing = new Listing(req.body);
   newListing.owner = req.user._id;   // safe now because user is logged in
   await newListing.save();

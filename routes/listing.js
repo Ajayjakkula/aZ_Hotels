@@ -1,28 +1,30 @@
-const express=require("express")
-const router=express.Router()
+const express = require("express");
+const router = express.Router();
 const wrapAsync = require("../utils/wrapAsync");
-const mongoose = require("mongoose");
 const Listing = require("../models/listing");
-const ExpressError = require("../utils/ExpressError");
-const {isLoggedIn,isOwner}=require("../middelware");
-const path = require("path");
-const {renderindex,rendernewlisting,rendershowroute,rendereditroute,editroute,addroute,deleteroute}=require("../controllers/listing")
-
+const { isLoggedIn, isOwner } = require("../middelware");
+const { 
+  renderindex,
+  rendernewlisting,
+  rendershowroute,
+  rendereditroute,
+  editroute,
+  addroute,
+  deleteroute
+} = require("../controllers/listing");
 
 router.get("/", wrapAsync(renderindex));
 
-router.get("/add/new",isLoggedIn,rendernewlisting );
-
-router.post("/add/newdata", isLoggedIn, wrapAsync(addroute));
-
+router.route("/add/new")
+  .get(isLoggedIn, rendernewlisting)
+  .post(isLoggedIn, wrapAsync(addroute));
 
 router.get("/:id", wrapAsync(rendershowroute));
 
+router.route("/edit/:id")
+  .get(isLoggedIn, isOwner, wrapAsync(rendereditroute))
+  .patch(isLoggedIn, isOwner, wrapAsync(editroute));
 
-router.get("/edit/:id", isLoggedIn,isOwner,wrapAsync(rendereditroute));
+router.delete("/delete/:id", isLoggedIn, isOwner, wrapAsync(deleteroute));
 
-router.patch("/edit/:id", isLoggedIn,isOwner,wrapAsync(editroute));
-
-router.delete("/delete/:id",isLoggedIn,isOwner, wrapAsync(deleteroute));
-
-module.exports=router;
+module.exports = router;
