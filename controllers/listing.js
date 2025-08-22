@@ -9,13 +9,20 @@ module.exports.rendernewlisting=async (req, res) => {
   res.render("addnewlisting.ejs");
 };
 
-module.exports.addroute=async (req, res) => {
-  const newListing = new Listing(req.body);
-  newListing.owner = req.user._id;   // safe now because user is logged in
-  await newListing.save();
-  req.flash("success", "New Listing Created!");
-  res.redirect("/listings");
+module.exports.addroute = async (req, res) => {
+  const listing = new Listing(req.body.listing);
+  listing.owner = req.user._id;
+
+  if (req.file) {
+    listing.image = req.file.path; // Cloudinary URL
+  }
+
+  await listing.save();
+  req.flash("success", "New listing added!");
+  res.redirect(`/listings/${listing._id}`);
 };
+
+
 
 module.exports.rendershowroute=async (req, res) => {
   let { id } = req.params;

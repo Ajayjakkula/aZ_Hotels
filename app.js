@@ -1,3 +1,7 @@
+if(process.env.NODE_ENV!="production"){
+  require("dotenv").config();
+}
+
 const express = require("express");
 const methodOverride = require("method-override");
 const path = require("path");
@@ -10,6 +14,7 @@ const { listingSchema } = require("./shema.js");
 const Review = require("./models/review.js");
 const session = require("express-session");
 const flash = require("connect-flash");
+
 
 const listRouters = require("./routes/listing.js");
 const revRouters = require("./routes/review.js");

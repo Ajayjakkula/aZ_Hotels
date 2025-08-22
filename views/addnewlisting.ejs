@@ -5,7 +5,7 @@
       <h2 class="mb-4 text-center">Add a New Listing</h2>
       
       <!-- Form -->
-      <form action="/listings/add/new" method="POST" class="needs-validation" novalidate>
+      <form action="/listings/add/new" method="POST" class="needs-validation" enctype="multipart/form-data" novalidate>
      
         <div class="mb-3">
           <label for="title" class="form-label">Title</label>
@@ -43,9 +43,8 @@
         </div>
 
         <div class="mb-3">
-          <label for="image" class="form-label">Image URL</label>
-          <input type="url" id="image" name="image" class="form-control" required>
-          <div class="invalid-feedback">Please provide a valid image URL.</div>
+          <label for="image" class="form-label">Upload Image </label>
+          <input type="file" id="image" name="image" class="form-control"  required>
         </div>
 
         <div class="d-flex justify-content-between mt-4">
