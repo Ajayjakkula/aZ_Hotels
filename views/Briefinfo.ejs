@@ -1,47 +1,69 @@
 <% layout("/layout/boilerplate") %>
+
 <% if(success && success.length > 0) { %>
   <div class="alert alert-success">
     <%= success[0] %>
   </div>
 <% } %>
+<% if(error && error.length > 0) { %>
+  <div class="alert alert-danger">
+    <%= error[0] %>
+  </div>
+<% } %>
+
 <body>
   <div class="container my-5">
     <div class="card shadow-lg mx-auto border-0 rounded-4" style="max-width: 700px;">
-      
+
       <!-- Image -->
       <img src="<%= totaldata.image || 'default-url' %>" 
            class="card-img-top rounded-top-4" 
            alt="<%= totaldata.title %>"
            style="height: 350px; object-fit: cover;">
 
+      <!-- Owner Info -->
       <div class="card-body p-4">
-        <!-- Title & Location -->
+        <% if(totaldata.owner) { %>
+          <h2 class="card-title mb-3 text-primary fw-bold">Owner: <%= totaldata.owner.username %></h2>
+          <p class="text-muted mb-3">
+            <i class="fa-solid fa-envelope text-danger"></i>
+            <%= totaldata.owner.email %>
+          </p>
+        <% } else { %>
+          <h2 class="card-title mb-3 text-secondary">Owner: Not Assigned</h2>
+        <% } %>
+      </div>
+
+      <!-- Listing Info -->
+      <div class="card-body p-4">
         <h2 class="card-title mb-3 text-primary fw-bold"><%= totaldata.title %></h2>
         <p class="text-muted mb-3">
           <i class="fa-solid fa-location-dot text-danger"></i> 
           <%= totaldata.location %>, <%= totaldata.country %>
         </p>
-
-        <!-- Description -->
         <p class="card-text mb-3"><%= totaldata.description %></p>
-        
-        <!-- Price -->
         <h5 class="text-success fw-semibold">$<%= totaldata.price %> / night</h5>
 
         <!-- Action Buttons -->
         <div class="d-flex justify-content-between align-items-center mt-4">
           <a href="/listings" class="btn btn-outline-secondary">🏠 Home</a>
-          <div>
-            <a href="/listings/edit/<%= totaldata._id %>" class="btn btn-primary me-2">✏️ Edit</a>
-            <form action="/listings/delete/<%= totaldata._id %>?_method=delete" method="post" class="d-inline">
-              <button type="submit" class="btn btn-danger">🗑️ Delete</button>
-            </form>
-          </div>
-        </div>
 
-        <!-- Review Section -->
-        <div class="mt-5">
-          <h4 class="mb-3">💬 Leave a Review</h4>
+         
+            <div>
+              <a href="/listings/edit/<%= totaldata._id %>" class="btn btn-primary me-2">✏️ Edit</a>
+              <form action="/listings/delete/<%= totaldata._id %>?_method=delete" method="post" class="d-inline">
+                <button type="submit" class="btn btn-danger">🗑️ Delete</button>
+              </form>
+            </div>
+         
+        </div>
+      </div>
+
+      <!-- Review Section -->
+      <div class="card-body p-4">
+        <h4 class="mb-3">💬 Leave a Review</h4>
+
+        <% if(currentUser) { %>
           <form action="/listings/<%= totaldata._id %>/reviews" method="post" novalidate class="needs-validation">
             <div class="mb-3">
               <textarea name="review[comment]" class="form-control" rows="3" placeholder="Enter your comment"></textarea>
@@ -49,22 +71,31 @@
             <div class="mb-3">
               <input type="number" name="review[rating]" class="form-control w-50" placeholder="Enter Rating 1-5" min="1" max="5">
             </div>
-            <button type="submit" class="btn btn-success">✅ Submit Review</button>
+            <button type="submit" class="btn btn-success">Submit Review</button>
           </form>
-          <hr>
-<h4>All Reviews</h4>
+        <% } else { %>
+          <p class="text-muted fst-italic">Please <a href="/login">login</a> to leave a review.</p>
+        <% } %>
 
-<% if(totaldata.review.length > 0) { %>
-  <% for(rev of totaldata.review ) { %>
-    <h5>Comment: <%= rev.comment %></h5>
-    <h5>Rating: ⭐ <%= rev.rating %></h5>
-    <form action="/listings/<%= totaldata._id %>/reviews/delete/<%= rev._id %>?_method=delete" method="post"><button type="submit" class="btn btn-dark">Delete Review</button></form>
-  <% } %>
-<% } else { %>
-  <p>No reviews yet</p>
-<% } %>
+        <hr>
+        <h4>All Reviews</h4>
+        <% if(totaldata.review.length > 0) { %>
+          <% for(let rev of totaldata.review) { %>
+            <div class="border rounded-3 p-3 mb-3 bg-light">
+              <h3 class="mb-1"><%= rev.author.username %></h3>
+              <p class="mb-1">Comment: <%= rev.comment %></p>
+              <h6 class="mb-2 text-warning">⭐ <%= rev.rating %></h6>
 
-        </div>
+              <% if(currentUser && rev.author && currentUser._id.toString() === rev.author._id.toString()) { %>
+                <form action="/listings/<%= totaldata._id %>/reviews/delete/<%= rev._id %>?_method=delete" method="post">
+                  <button type="submit" class="btn btn-sm btn-dark">Delete Review</button>
+                </form>
+              <% } %>
+            </div>
+          <% } %>
+        <% } else { %>
+          <p class="text-muted">No reviews yet</p>
+        <% } %>
       </div>
     </div>
   </div>
@@ -76,7 +107,7 @@
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
     .card-title {
-      font-size: 1.8rem;
+      font-size: 1.6rem;
     }
     textarea, input {
       border-radius: 10px;

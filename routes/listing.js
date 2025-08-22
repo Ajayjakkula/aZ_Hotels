@@ -4,7 +4,9 @@ const wrapAsync = require("../utils/wrapAsync");
 const mongoose = require("mongoose");
 const Listing = require("../models/listing");
 const ExpressError = require("../utils/ExpressError");
-const {isLoggedIn}=require("../middelware")
+const {isLoggedIn,isOwner}=require("../middelware");
+const path = require("path");
+
 
 
 router.get("/", wrapAsync(async (req, res) => {
@@ -16,30 +18,31 @@ router.get("/add/new",isLoggedIn, (req, res) => {
   res.render("addnewlisting.ejs");
 });
 
-router.post("/add/newdata", wrapAsync(async (req, res) => {
-  // const result = listingSchema.validate(req.body);
-  await Listing.create(req.body);
-   req.flash("success","New Listing Created ")
+router.post("/add/newdata", isLoggedIn, wrapAsync(async (req, res) => {
+  const newListing = new Listing(req.body);
+  newListing.owner = req.user._id;   // safe now because user is logged in
+  await newListing.save();
+  req.flash("success", "New Listing Created!");
   res.redirect("/listings");
-
-  //suppose if you have not enterd valid description
-  //const newlisting = new Listing(req.body.listing)
-  //if(!newlisting.descrption){
-  //throw new ExpressError(404,"Send Valid Description")
-  //}
 }));
 
 router.get("/:id", wrapAsync(async (req, res) => {
   let { id } = req.params;
-  let totaldata = await Listing.findById(id).populate("review"); // <-- populate reviews
+  let totaldata = await Listing.findById(id).populate({
+    path:"review",
+    populate:{
+      path:"author",
+    },
+  }).populate("owner"); // <-- populate reviews
   if (!totaldata) {
     throw new ExpressError(404, "Listing not found");
   }
+ // console.log(totaldata)
   res.render("Briefinfo", { totaldata });
 }));
 
 
-router.get("/edit/:id", isLoggedIn,wrapAsync(async (req, res) => {
+router.get("/edit/:id", isLoggedIn,isOwner,wrapAsync(async (req, res) => {
 
   let { id } = req.params;
   let listing = await Listing.findById(id);
@@ -49,7 +52,7 @@ router.get("/edit/:id", isLoggedIn,wrapAsync(async (req, res) => {
   res.render("editcurrent", { listing });
 }));
 
-router.patch("/edit/:id", isLoggedIn,wrapAsync(async (req, res) => {
+router.patch("/edit/:id", isLoggedIn,isOwner,wrapAsync(async (req, res) => {
 
   let { id } = req.params;
   let { title, description, price } = req.body;
@@ -67,7 +70,7 @@ router.patch("/edit/:id", isLoggedIn,wrapAsync(async (req, res) => {
   res.redirect(`/listings/${id}`);
 }));
 
-router.delete("/delete/:id",isLoggedIn, wrapAsync(async (req, res) => {
+router.delete("/delete/:id",isLoggedIn,isOwner, wrapAsync(async (req, res) => {
   let { id } = req.params;
   await Listing.findByIdAndDelete(id);
   req.flash("success"," Listing  Deleted ")
