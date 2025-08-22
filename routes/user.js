@@ -17,7 +17,14 @@ router.route("/signup")
 
 router.route("/login")
   .get(renderlogin)
-  .post(loginroute);
+  .post(
+    saveRedirectUrl,
+    passport.authenticate("local", {
+      failureRedirect: "/login",
+      failureFlash: true,
+    }),
+    loginroute   
+  );
 
 router.get("/logout", logoutroute);
 
