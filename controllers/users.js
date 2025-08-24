@@ -1,6 +1,9 @@
+const User=require("../models/user")
 module.exports.rendersignup = (req, res) => {
   res.render("users/signup");
 };
+
+
 
 module.exports.signuproute = async (req, res) => {
   try {
@@ -10,7 +13,7 @@ module.exports.signuproute = async (req, res) => {
     req.flash("success", "Welcome to aZ-Hotels");
     res.redirect("/login");
   } catch (e) {
-    req.flash("error", "Username already exists");
+    req.flash("error", e.message);  
     res.redirect("/signup");
   }
 };

@@ -10,12 +10,17 @@ module.exports.rendernewlisting=async (req, res) => {
 };
 
 module.exports.addroute = async (req, res) => {
-  const listing = new Listing(req.body.listing);
-  listing.owner = req.user._id;
+  const { title, description, location, country, price } = req.body;
 
-  if (req.file) {
-    listing.image = req.file.path; // Cloudinary URL
-  }
+  const listing = new Listing({
+    title,
+    description,
+    location,
+    country,
+    price,
+    owner: req.user._id,
+    image: req.file ? req.file.path : undefined
+  });
 
   await listing.save();
   req.flash("success", "New listing added!");
@@ -73,4 +78,3 @@ module.exports.deleteroute=async (req, res) => {
   req.flash("success"," Listing  Deleted ")
   res.redirect("/listings");
 };
-

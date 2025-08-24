@@ -1,4 +1,7 @@
 {
+   "engines": {
+    "node":"20.19.3"
+  },
   "name": "mojor_project",
   "version": "1.0.0",
   "description": "This is a Mern Based Project",
@@ -13,6 +16,7 @@
     "bootstrap": "^5.3.7",
     "cloudinary": "^1.41.3",
     "connect-flash": "^0.1.1",
+    "connect-mongo": "^5.1.0",
     "dotenv": "^17.2.1",
     "ejs": "^3.1.10",
     "ejs-mate": "^4.0.0",
@@ -20,6 +24,8 @@
     "express-session": "^1.18.2",
     "joi": "^18.0.0",
     "method-override": "^3.0.0",
+    "mongo-store": "^0.0.2",
+    "mongodb": "5.5",
     "mongoose": "^8.17.1",
     "multer": "^2.0.2",
     "multer-storage-cloudinary": "^4.0.0",

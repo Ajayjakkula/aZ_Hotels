@@ -13,6 +13,7 @@ const ExpressError = require("./utils/ExpressError");
 const { listingSchema } = require("./shema.js");
 const Review = require("./models/review.js");
 const session = require("express-session");
+const MongoStore = require('connect-mongo');
 const flash = require("connect-flash");
 
 
@@ -31,8 +32,27 @@ app.use(express.urlencoded({ extended: true }));//This middleware parses the for
 app.use(express.static(path.join(__dirname, "public")));
 app.use(methodOverride("_method"));
 
+// Database connection
+const dbUrl=process.env.ATLASDB_URL;
+
+const store = MongoStore.create({
+  mongoUrl: dbUrl,
+  crypto: {
+    secret: process.env.SECRET
+  },
+  touchAfter: 24 * 3600
+});
+
+store.on("error", (err) => {
+  console.log("Error in MongoDB Session Store", err);
+});
+
+
+store.on("error",()=>{console.log("Error in MDB store",err)})
+
 const sessionOptions = {
-  secret: "mysecret", //cookie on the client’s browser -->Session Id signature
+  store,
+  secret: process.env.SECRET, //cookie on the client’s browser -->Session Id signature
   resave: false,
   saveUninitialized: true,
   cookie: {
@@ -41,6 +61,8 @@ const sessionOptions = {
     httpOnly: true
   }
 };
+
+
 
 app.use(session(sessionOptions));
 app.use(flash());
@@ -61,10 +83,15 @@ app.use((req, res, next) => {   ///Locals are the middlewares
   next();
 });
 
-// Database connection
-mongoose.connect("mongodb://127.0.0.1:27017/Hotel")
-  .then(() => console.log("MongoDB connected"))
-  .catch(err => console.error(err));
+
+
+main()
+.then(()=>{console.log("Connected to DB")})
+.catch((err)=>{console.log(err)})
+
+async function main(){
+  await mongoose.connect(dbUrl)
+}
 
 // View engine setup
 app.set("views", path.join(__dirname, "views"));//we rae sayling exact location

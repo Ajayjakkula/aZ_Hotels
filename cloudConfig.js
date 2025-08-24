@@ -11,7 +11,7 @@ const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
     folder: "aZ-Hotels",
-    allowed_formats: ["jpg", "jpeg", "png"], // lowercase
+    allowed_formats: ["jpg", "jpeg", "png","webp"], // lowercase
   },
 });
 
