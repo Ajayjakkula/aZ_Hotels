@@ -100,6 +100,11 @@ app.engine("ejs", ejsmate);
 
 
 
+app.get("/", (req, res) => {
+  res.redirect("/listings");
+});
+
+
 // Routes
 app.use("/listings", listRouters);
 app.use("/listings/:id/reviews", revRouters);
