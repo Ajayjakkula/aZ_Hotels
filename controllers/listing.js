@@ -2,7 +2,7 @@ const Listing=require("../models/listing")
 
 module.exports.renderindex=async (req, res) => {
   let totaldata = await Listing.find({});
-  res.render("home", { totaldata });
+  res.redirect("/listings");
 };
 
 module.exports.rendernewlisting=async (req, res) => {
